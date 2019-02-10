@@ -5,4 +5,5 @@
     <string name="message">Es una noche de lluvia. Es buen momento para estar en casa :)</string>
     <string name="like">Me gusta</string>
     <string name="comment">Comentar</string>
+    <string name="dislike">No me gusta</string>
 </resources>
