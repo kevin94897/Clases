@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         btYes = findViewById(R.id.btYes);
@@ -35,23 +36,22 @@ public class MainActivity extends AppCompatActivity {
         questions = new ArrayList<>();
         loadQuestions();
 
-        tvQuestion.setText(questions.get(actualPosition).getName());
+        showActualQuestion();
 
         btYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this,
-                        getString(R.string.answer_correct)
-                        , Toast.LENGTH_SHORT).show();
+
+                verifyResponse(true);
+
             }
         });
 
         btNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this,
-                        getString(R.string.answer_incorrect)
-                        , Toast.LENGTH_SHORT).show();
+                verifyResponse(false);
+
             }
         });
 
@@ -59,10 +59,32 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 actualPosition += 1;
-                tvQuestion.setText(questions.get(actualPosition).getName());
 
+                if (actualPosition == questions.size()) {
+                    actualPosition = 0;
+                }
+
+                showActualQuestion();
             }
         });
+
+    }
+
+    private void verifyResponse(boolean option) {
+        Question actualQuestion = questions.get(actualPosition);
+        if (option == actualQuestion.isResponse()){
+            Toast.makeText(MainActivity.this,
+                    getString(R.string.answer_correct)
+                    , Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(MainActivity.this,
+                    getString(R.string.answer_incorrect)
+                    , Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void showActualQuestion() {
+        tvQuestion.setText(questions.get(actualPosition).getName());
 
     }
 
@@ -79,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         Question questionColombia =
-                new Question(getString(R.string.colombia_question), false);
+                new Question(getString(R.string.colombia_question), true);
         questions.add(questionColombia);
 
 
