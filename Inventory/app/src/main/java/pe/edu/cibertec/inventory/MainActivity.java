@@ -2,6 +2,7 @@ package pe.edu.cibertec.inventory;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -33,12 +34,18 @@ public class MainActivity extends AppCompatActivity {
 
         // Inicaliza el adaptador
         adapterProduct = new AdapterProduct(items);
+
+        rvProduct.setAdapter(adapterProduct);
+
+        rvProduct.setLayoutManager(new LinearLayoutManager(this));
+
+
     }
 
     private void loadItems() {
         // Instancia un objeto de la clase Product
         Product productLaptop = new Product("Laptop",
-                        "Marca Toshiba", 2);
+                "Marca Toshiba", 2);
 
         // Agrega el objeto creado a la lista
         items.add(productLaptop);
@@ -46,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         Product productMouse = new Product("Mouse",
                 "Modelo Genious", 122);
         items.add(productMouse);
-
 
 
     }
