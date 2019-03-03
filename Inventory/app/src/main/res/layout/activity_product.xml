@@ -56,6 +56,7 @@
             android:id="@+id/etQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/et_quantity" />
+            android:hint="@string/et_quantity"
+            android:inputType="number" />
     </android.support.design.widget.TextInputLayout>
 </android.support.constraint.ConstraintLayout>

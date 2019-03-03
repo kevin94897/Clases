@@ -1,10 +1,12 @@
 package pe.edu.cibertec.inventory;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     // Adaptador
     AdapterProduct adapterProduct;
+
+    final static int REQUEST_CODE_MAIN = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +73,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = new Intent(this, ProductActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_MAIN);
+
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE_MAIN && resultCode == RESULT_OK) {
+            String name = data.getStringExtra("product_name");
+            String description = data.getStringExtra("product_description");
+            int quantity = data.getIntExtra("product_quantity",0);
+
+            Product product = new Product(name, description, quantity);
+
+            items.add(product);
+
+            adapterProduct.notifyDataSetChanged();
+
+        }
+
     }
 }
