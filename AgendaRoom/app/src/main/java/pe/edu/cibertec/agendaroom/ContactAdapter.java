@@ -1,11 +1,14 @@
 package pe.edu.cibertec.agendaroom;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -30,8 +33,30 @@ class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactPrototyp
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ContactPrototype contactPrototype, int position) {
+    public void onBindViewHolder(@NonNull ContactPrototype contactPrototype, final int position) {
         contactPrototype.tvName.setText(items.get(position).getName());
+
+        contactPrototype.cvContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Obteniendo el contacto seleccionado
+                Contact contact = items.get(position);
+
+                //Obteniendo los datos del contacto
+                int id = contact.getId();
+                String name = contact.getName();
+                String telephone = contact.getTelephone();
+
+                Intent intent = new Intent(v.getContext(), ContactActivity.class);
+
+                //Enviando los datos del contacto
+                intent.putExtra("id", id);
+                intent.putExtra("name", name);
+                intent.putExtra("telephone", telephone);
+
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -40,12 +65,16 @@ class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ContactPrototyp
     }
 
     public class ContactPrototype extends RecyclerView.ViewHolder {
+        CardView cvContact;
         TextView tvName;
 
-        public ContactPrototype(@NonNull View itemView) {
+        public ContactPrototype(@NonNull final View itemView) {
             super(itemView);
 
+            cvContact = itemView.findViewById(R.id.cvContact);
             tvName = itemView.findViewById(R.id.tvName);
+
+
         }
     }
 }

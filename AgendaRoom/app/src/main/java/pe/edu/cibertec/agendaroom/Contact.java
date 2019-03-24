@@ -7,7 +7,7 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity
 public class Contact {
 
-    @PrimaryKey
+    @PrimaryKey (autoGenerate = true)
     private int id;
 
     @ColumnInfo(name = "name")
@@ -17,6 +17,16 @@ public class Contact {
     private String telephone;
 
     public Contact(String name, String telephone) {
+        this.name = name;
+        this.telephone = telephone;
+    }
+
+    public Contact() {
+
+    }
+
+    public Contact(int id, String name, String telephone) {
+        this.id = id;
         this.name = name;
         this.telephone = telephone;
     }
